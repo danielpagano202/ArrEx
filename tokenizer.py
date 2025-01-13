@@ -355,7 +355,7 @@ def convert_to_list(a):
 
 #Formats string literals by removing extra quotes
 def format_string(a):
-    if a[0] == '"' and a[-1] == '"':
+    if type(a) is str and a[0] == '"' and a[-1] == '"':
         return a[1:-1]
     return a
 
@@ -460,7 +460,7 @@ def skim_func(a, b):
     return [x for x in convert_to_list(a) if x != convert_token_with_token_type(b, get_type(b))]
 
 #Interprets inline if statements
-def if_func(tokens, token_types, array, index):
+def if_func(tokens, token_types, array, index, a, b):
     tokens = tokens.copy()
     token_types = token_types.copy()
 
@@ -474,18 +474,18 @@ def if_func(tokens, token_types, array, index):
         colon_index = len(tokens)
 
     boolean_expression = tokens[0:if_index]
-    b = interpret_code(boolean_expression, token_types[0:if_index], array, index)[0][0]
+    bl = interpret_code(boolean_expression, token_types[0:if_index], array, index, a, b)[0][0]
     start_index = 0
     end_index = 0
-    if convert_to_bool(b):
+    if convert_to_bool(bl):
         start_index = if_index + 1
         end_index = colon_index
     else:
         start_index = colon_index + 1
         end_index = len(tokens)
     outcome = tokens[start_index:end_index]
-    if colon_exists or convert_to_bool(b):
-        new_tokens, new_token_types = interpret_code(outcome, token_types[start_index:end_index], array, index)
+    if colon_exists or convert_to_bool(bl):
+        new_tokens, new_token_types = interpret_code(outcome, token_types[start_index:end_index], array, index, a, b)
     else:
         new_tokens, new_token_types = (["Null"], ["NULL"])
     tokens = new_tokens
@@ -660,7 +660,6 @@ def l_func(**kwargs):
     array = kwargs['array']
     a = kwargs['a']
     b = kwargs['b']
-
     #Gets the initial value to start with from the first two elements of the array
     tokens_info = interpret_code(tokens, token_types, array, 0, array[0], array[1])
     answer = convert_token_with_token_type(tokens_info[0][0], tokens_info[1][0])
@@ -843,7 +842,6 @@ def interpret_code(tokens, token_types, array, index = 0, a = None, b = None):
         a = array
     if b is None:
         b = array
-
     #Creates copys of the tokens. It allows us to see if no changes have been made to know that there is a recursion error
     new_tokens = tokens.copy()
     new_token_types = token_types.copy()
@@ -860,7 +858,7 @@ def interpret_code(tokens, token_types, array, index = 0, a = None, b = None):
     # Interprets IF Statements
     if_spot = get_token_index_code(tokens, "?", 0)
     if if_spot != -1:
-        new_tokens, new_token_types = if_func(new_tokens, new_token_types, array, index)
+        new_tokens, new_token_types = if_func(new_tokens, new_token_types, array, index, a, b)
 
 
     #Interprets functions in the code by looping until all functions are parsed
@@ -1034,6 +1032,8 @@ def evaluate(array, expression, additions = None):
     global important_symbols_dict
     global function_dict
     global max_symbol_length
+    if expression == "":
+        return ""
     important_symbols_dict = base_symbols_dict.copy()
     function_dict = base_function_dict.copy()
     if additions:
@@ -1047,4 +1047,4 @@ def evaluate(array, expression, additions = None):
         max_symbol_length = max([len(x) for x in important_symbols_dict.keys()])
     token_info = interpret_code(*tokenize_code(expression),array)
     answer = convert_token_with_token_type(token_info[0][0], token_info[1][0])
-    return answer
+    return format_string(answer)

@@ -7,7 +7,7 @@ Array Expressions - Shorthand Language for Array Manipulation
 
 ## Documentation
 
-[Documentation](https://github.com/danielpagano202/ArrEx/blob/main/docs.json)
+[Documentation](https://github.com/danielpagano202/ArrEx/blob/main/docs/docs.json)
 
 
 ## Features
@@ -22,17 +22,16 @@ Array Expressions - Shorthand Language for Array Manipulation
 
 ## Installation
 
-Project is not on Pip yet, so it must be downloaded manually
-
+Install on Pip (Recommended) or Get Python Files from Github Src
 ```bash
-  Work - In - Progress
+pip install ArrayExpressions
 ```
     
 ## Getting Started
 
 The main function that will be used is evaluate
 ```python
-    import arrex.py as arrex
+    from ArrayExpressions import arrex
 
     lst = [1, 2, 3, 4, 5]
 
@@ -72,7 +71,7 @@ The k (defaulting to 1) represents how many elements are looked at in each pass 
 
 For example:
 ```python
-    import arrex.py as arrex
+    from ArrayExpressions import arrex
 
     lst = [1, 2, 3, 4, 5, 6]
 
@@ -118,6 +117,7 @@ For example, if the x is a string, then you can loop through each letter
 ## Operators
 
 You have already seen the plus operator. There are a few more
+
 | Name | Symbol | Use | Code | Comments
 | :---:   | :---: | :---: | :---: | :---:
 | Plus | + | Adding numbers, strings, or arrays | 1 + 2 | 3
@@ -170,7 +170,7 @@ The iK() function indexes the array inside of it.
 The sc() function allows you to change what the current scope is
 
 ```python
-    import arrex.py as arrex
+    from ArrayExpressions import arrex
 
     lst = [1, 2, 3, 4, 5, 6]
 
@@ -194,7 +194,7 @@ So, the code `i0() * i1() * i2()` has an x of [3, 7, 11] that it gets elements f
 The l function will loop through x, but cumulate everything into one value
 
 ```python
-    import arrex.py as arrex
+    from ArrayExpressions import arrex
 
     lst = [1, 2, 3, 4, 5, 6]
 
@@ -214,7 +214,7 @@ The l function will loop through x, but cumulate everything into one value
 This means you can also use l() to find the max
 
 ```python
-    import arrex.py as arrex
+    from ArrayExpressions import arrex
 
     lst = [1, 2, 3, 6, 5, 4]
 

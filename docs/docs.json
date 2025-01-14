@@ -98,7 +98,7 @@
     "example": "cv{tb}(0)",
     "example-explanation": "Will convert the number into a bool, which in this case is false"
   },
-  "sr": {
+  "srt": {
     "type": "function",
     "description": "Sorts the scope array",
     "input": "Any valid equation",
@@ -106,7 +106,7 @@
     "output": "Will output the value of whatever it returns",
     "K": "Nothing",
     "I": "Same index",
-    "example": "sr(x)",
+    "example": "srt(x)",
     "example-explanation": "This will return the sorted array"
   },
   "re": {
@@ -263,7 +263,7 @@
     "Get the index where element matches A": "e1(A_x ? I)",
     "Sum a List": "l(a+b)",
     "Check which elements are floats or integers": "e1(x // 1 == x ? T : F)",
-    "Find the largest element in an array": "l(b>a?b:a)) OR i0(sr(x))",
+    "Find the largest element in an array": "l(b>a?b:a)) OR i0(srt(x))",
     "Find the longest array in an array of arrays": "sc(e1(L), l(b>a?b:a))",
     "Alternative": "sc(ar(0) + x, l(sc(b, L) > a ? sc(b, L) : a))",
     "Find the most common element": "l(b#x > a#x ? b:a)",

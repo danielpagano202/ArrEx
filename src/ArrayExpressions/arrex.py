@@ -53,7 +53,7 @@ base_symbols_dict = {
     "l": "FUNC",
     "ar": "FUNC",
     "cv": "FUNC",
-    "sr": "FUNC",
+    "srt": "FUNC",
     "re": "FUNC"
 }
 
@@ -1033,13 +1033,14 @@ def evaluate(array, expression, additions = None):
     important_symbols_dict = base_symbols_dict.copy()
     function_dict = base_function_dict.copy()
     if additions:
-        if type(additions) is not dict:
-            call_error("Extra Functions need to be dictionary!")
+        if type(additions) is not list or type(additions[0]) is not dict:
+            call_error("Extra Functions need to be a list of dictionary(s)!")
         for i in additions:
-            if i in important_symbols_dict:
-                call_error("Symbol Already Exists!")
-            important_symbols_dict[i] = "FUNC"
-            function_dict[i] = additions[i]
+            for j in i:
+                if j in important_symbols_dict:
+                    call_error("Symbol Already Exists!")
+                important_symbols_dict[j] = "FUNC"
+                function_dict[j] = i[j]
         max_symbol_length = max([len(x) for x in important_symbols_dict.keys()])
     token_info = interpret_code(*tokenize_code(expression),array)
     answer = convert_token_with_token_type(token_info[0][0], token_info[1][0])

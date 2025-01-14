@@ -285,11 +285,11 @@ func_dict = {
 
 lst = [90, 180, 270, 360, 45, 30]
 
-arrex.evaluate(lst, "e(sin(x))", func_dict) #[1.0, 0.0, -1.0, -0.0, 0.7071067812, 0.5]
+arrex.evaluate(lst, "e(sin(x))", [func_dict]) #[1.0, 0.0, -1.0, -0.0, 0.7071067812, 0.5]
     
 ```
 
-Essentially, a custom function is defined by making a python function, giving it a name using a dictionary, and putting the dictionary in the optional argument
+Essentially, a custom function is defined by making a python function, giving it a name using a dictionary, and putting the list of dictionary(s) in the optional argument
 
 
 ## How to support this project

@@ -31,14 +31,13 @@ pip install ArrayExpressions
 
 The main function that will be used is evaluate
 ```python
-    from ArrayExpressions import arrex
+from ArrayExpressions import arrex
 
-    lst = [1, 2, 3, 4, 5]
+lst = [1, 2, 3, 4, 5]
 
-    output = arrex.evaluate(lst, "e(x + 1)")
+output = arrex.evaluate(lst, "e(x + 1)")
 
-    print(output) # [2, 3, 4, 5, 6]
-
+print(output) # [2, 3, 4, 5, 6]
 ```
 
 In this code, evaluate will run the code, passing in lst to the scope (represented by 'x').
@@ -71,14 +70,13 @@ The k (defaulting to 1) represents how many elements are looked at in each pass 
 
 For example:
 ```python
-    from ArrayExpressions import arrex
+from ArrayExpressions import arrex
 
-    lst = [1, 2, 3, 4, 5, 6]
+lst = [1, 2, 3, 4, 5, 6]
 
-    output = arrex.evaluate(lst, "e2(i0(x) + i1(x))")
+output = arrex.evaluate(lst, "e2(i0(x) + i1(x))")
 
-    print(output) # [3, 7, 11]
-
+print(output) # [3, 7, 11]
 ```
 
 | Step | X | Code | Return | Comments
@@ -170,17 +168,17 @@ The iK() function indexes the array inside of it.
 The sc() function allows you to change what the current scope is
 
 ```python
-    from ArrayExpressions import arrex
+from ArrayExpressions import arrex
 
-    lst = [1, 2, 3, 4, 5, 6]
+lst = [1, 2, 3, 4, 5, 6]
 
-    code = """
-        sc( e2(i0(x) + i1(x)),  i0() * i1() * i2() ) 
-    """
+code = """
+    sc( e2(i0(x) + i1(x)),  i0() * i1() * i2() ) 
+"""
 
-    output = arrex.evaluate(lst, code)
+output = arrex.evaluate(lst, code)
 
-    print(output) # 231
+print(output) # 231
 ```
 
 In this code, the e2(i0(x) + i1(x)) will create the array [3, 7, 11]
@@ -194,17 +192,17 @@ So, the code `i0() * i1() * i2()` has an x of [3, 7, 11] that it gets elements f
 The l function will loop through x, but cumulate everything into one value
 
 ```python
-    from ArrayExpressions import arrex
+from ArrayExpressions import arrex
 
-    lst = [1, 2, 3, 4, 5, 6]
+lst = [1, 2, 3, 4, 5, 6]
 
-    code = """
-        l(a + b)
-    """
+code = """
+    l(a + b)
+"""
 
-    output = arrex.evaluate(lst, code)
+output = arrex.evaluate(lst, code)
 
-    print(output) # 21
+print(output) # 21
 ```
 
 `a` represents the cumulated value (which starts equal to the first element)
@@ -214,17 +212,17 @@ The l function will loop through x, but cumulate everything into one value
 This means you can also use l() to find the max
 
 ```python
-    from ArrayExpressions import arrex
+from ArrayExpressions import arrex
 
-    lst = [1, 2, 3, 6, 5, 4]
+lst = [1, 2, 3, 6, 5, 4]
 
-    code = """
-        l(b > a ? b : a)
-    """
+code = """
+    l(b > a ? b : a)
+"""
 
-    output = arrex.evaluate(lst, code)
+output = arrex.evaluate(lst, code)
 
-    print(output) # 6
+print(output) # 6
 ```
 
 ### cv()
@@ -243,6 +241,56 @@ The only conversions that aren't possible are:
 - String to number if string isn't a number
 
 There are other functions, but these have important utility that should be known.
+
+## Custom Functions
+
+Custom functions can be easily added to greatly improve functionality:
+
+Functions Generally Look Like This (Example is to Implement Sine Function)
+```python
+from ArrayExpressions import arrex
+import math
+
+def sin_func(**kwargs):
+    #Gets the arguments
+    k = kwargs['k'] #Parameter
+    array = kwargs['array'] #Scope array
+    tokens = kwargs['tokens'] #Tokens
+    token_types = kwargs['token_types'] #Token Types
+    index = kwargs['index']
+    a = kwargs['a'] #The a
+    b = kwargs['b'] #The b
+
+    # Verify type of k (not needed here)
+    # arrex.verify_type(k, "NUMBER") #Can be "STRING", "BOOL", "ARRAY". Can set optional parameter to True to allow something like tn to count
+
+    #Do any checks that need to be made for k, array, etc.
+
+    #Interprets answer
+    tokens_info = arrex.interpret_code(tokens, token_types, array, index, a, b)
+    
+    #Converts answer to python equivalent type as tokens_info[0][0] is the token and [0][1] is the token type
+    answer = arrex.convert_token_with_token_type(tokens_info[0][0], tokens_info[1][0])
+
+    #Do any needed checks
+    if not isinstance(answer, (int, float)):
+        arrex.call_error("Tokens inside are not of type float")
+    
+    #Return value
+    return round(math.sin(math.radians(answer)), 10)
+
+func_dict = {
+    "sin": sin_func
+}
+
+lst = [90, 180, 270, 360, 45, 30]
+
+arrex.evaluate(lst, "e(sin(x))", func_dict) #[1.0, 0.0, -1.0, -0.0, 0.7071067812, 0.5]
+    
+```
+
+Essentially, a custom function is defined by making a python function, giving it a name using a dictionary, and putting the dictionary in the optional argument
+
 
 ## How to support this project
 

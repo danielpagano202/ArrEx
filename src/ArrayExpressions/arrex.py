@@ -63,10 +63,6 @@ important_symbols_dict = {}
 #The longest symbol
 max_symbol_length = max([len(x) for x in base_symbols_dict.keys()])
 
-
-
-
-
 #Calls an error
 def call_error(error):
     raise Exception(error)

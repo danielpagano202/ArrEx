@@ -246,4 +246,4 @@ There are other functions, but these have important utility that should be known
 
 ## How to support this project
 
-Star the repository. Thank you :)
+⭐ Star the repository on Github. Thank you :)

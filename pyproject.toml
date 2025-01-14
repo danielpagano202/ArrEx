@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ArrayExpressions"
+version = "0.0.1"
+authors = [
+  { name="Daniel Pagano", email="danielpagano202@gmail.com" },
+]
+description = "Array Expressions - Shorthand Language for Array Manipulation"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/danielpagano202/ArrEx"
+Issues = "https://github.com/danielpagano202/ArrEx/issues"

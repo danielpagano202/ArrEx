@@ -257,7 +257,7 @@ def sin_func(**kwargs):
     array = kwargs['array'] #Scope array
     tokens = kwargs['tokens'] #Tokens
     token_types = kwargs['token_types'] #Token Types
-    index = kwargs['index']
+    index = kwargs['index'] #Index
     a = kwargs['a'] #The a
     b = kwargs['b'] #The b
 

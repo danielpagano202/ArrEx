@@ -753,7 +753,7 @@ def cv_func(**kwargs):
     elif k == "BOOL":
         return bool(value)
 
-def sr_func(**kwargs):
+def srt_func(**kwargs):
     tokens = kwargs['tokens']
     token_types = kwargs['token_types']
     array = kwargs['array']
@@ -761,18 +761,19 @@ def sr_func(**kwargs):
     a = kwargs['a']
     b = kwargs['b']
 
-    #Creates a copy of the array
-    sorted_array = array.copy()
-
-    #Tries to sort it if possible
-    try:
-        sorted_array.sort()
-    except:
-        call_error(f"Array {array} can not be sorted!")
-
-    #Interprets code inside, passing sorted array
-    tokens_info = interpret_code(tokens, token_types, sorted_array, index, a, b)
+    #Interprets code inside
+    tokens_info = interpret_code(tokens, token_types, array, index, a, b)
     answer = convert_token_with_token_type(tokens_info[0][0], tokens_info[1][0])
+
+    if isinstance(answer, Iterable):
+        #Will return everything together as one string if a string was offset
+        formatted_array = format_string(answer)
+        formatted_array = sorted(formatted_array)
+        if tokens_info[1][0] == "STRING":
+            return '"' + "".join(formatted_array) + '"'
+        return formatted_array
+    else:
+        call_error(f"The element {answer} can't be sorted")
 
     return answer
 
@@ -826,7 +827,7 @@ base_function_dict = {
     "l": l_func,
     "ar": ar_func,
     "cv": cv_func,
-    "sr": sr_func,
+    "srt": srt_func,
     "re": re_func
 }
 function_dict = {}

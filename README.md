@@ -7,7 +7,7 @@ Array Expressions - Shorthand Language for Array Manipulation
 
 ## Documentation
 
-[Documentation](https://github.com/danielpagano202/ArrEx/blob/main/docs/docs.json)
+[Documentation](https://arrex.org)
 
 
 ## Features
